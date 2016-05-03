@@ -1,7 +1,7 @@
 package studentadmin;
 /**
  * Klasse die verantwoordelijk is voor een CPP
- * @author erwin
+ * @author erwin engel
  */
 public class CCP extends Leertraject {
   private int totModules = 0;
