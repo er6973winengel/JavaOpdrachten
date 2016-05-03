@@ -3,7 +3,10 @@ package studentadmin;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-
+/**
+ * Representeert een Student.
+ * @author Erwin Engel
+ */
 public class Student extends Leerling{
   private double aantalStudiepunten = 0.0;
   private Opleiding opleiding = null;
