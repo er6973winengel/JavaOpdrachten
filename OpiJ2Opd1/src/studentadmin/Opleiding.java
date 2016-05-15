@@ -3,7 +3,7 @@ package studentadmin;
  * Klasse die verantwoordelijk is voor een Opleiding
  * @author erwin
  */
-public class Opleiding extends Leertraject {
+public class Opleiding extends Leertraject implements Cloneable{
   private double totStudiepunten = 0;
   /**
    * Constructor voor Oplieding
@@ -18,4 +18,8 @@ public class Opleiding extends Leertraject {
   public double getTotStudiepunten() {
     return totStudiepunten;
   } 
+  
+  public Object clone() throws CloneNotSupportedException{
+	  return super.clone();
+  }
 }

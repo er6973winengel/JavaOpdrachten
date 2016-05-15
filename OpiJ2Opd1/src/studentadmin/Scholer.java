@@ -4,67 +4,53 @@ package studentadmin;
  * @author Erwin Engel
  */
 public class Scholer extends Leerling{
-  private int aantalModules = 0;
-  private CCP ccp = null;
-  
-  public Scholer(String naam, Leertraject leertraject){
-    super(naam);
-    this.ccp = (CCP)leertraject;
-  }
-  
-  @Override
-  public Scholer clone(){
-    CCP CCPCopy = new CCP(this.ccp.getNaam(), this.ccp.getTotModules());
-    Scholer scholerClone = new Scholer(super.getNaam(), CCPCopy);
-    scholerClone.setAantalModules(this.aantalModules);
-    return scholerClone;
-  }
+	private int aantalModules = 0;
+	private CPP cpp = null;
 
-  @Override
-  public Leertraject getLeertraject() {
-    return this.ccp;
-  }
+	public Scholer(String naam, CPP cpp){
+		super(naam);
+		this.cpp = cpp;
+	}
 
-  @Override
-  public double geefScore() {
-    return aantalModules;
-  }
+	@Override
+	public boolean isGeslaagd() {
+		return this.aantalModules >= cpp.getTotModules();
+	}
 
-  @Override
-  public boolean isGeslaagd() {
-    return this.aantalModules >= ccp.getTotModules();
-  }
+	@Override
+	public String toString() {
+		String geslaagd = "niet geslaagd";
+		if (isGeslaagd()){
+			geslaagd = "geslaagd";
+		}
+		return (""+ super.getNaam() + "," + cpp.getNaam() + ","
+				+ this.aantalModules 
+				+ " modules," + geslaagd);
+	}
 
-  @Override
-  public void verhoogScore(double score) {
-    this.aantalModules = this.aantalModules + (int)score;    
-  }
+	/**
+	 * Verhoog huidige aantal modules met gegeven verhoging
+	 * @param verhoging , aantal modules verhoging
+	 */
+	public void verhoogModules(int verhoging) {
+		this.aantalModules = this.aantalModules + verhoging;    
+	}
 
-  @Override
-  public String toString() {
-    String geslaagd = "niet geslaagd";
-    if (isGeslaagd()){
-      geslaagd = "geslaagd";
-    }
-    return (""+ super.getNaam() + "," + ccp.getNaam() + ","
-              + this.aantalModules 
-              + " modules," + geslaagd);
-  }
-  
-  public void setAantalModules(int aantalModules) {
-    this.aantalModules = aantalModules;
-  }
-  
-  public void setCCP (CCP ccp){
-    this.ccp = ccp;
-  }
+	public void setCpp(CPP cpp) {
+		this.cpp = cpp;
+	}
 
-  public int getAantalModules() {
-    return aantalModules;
-  }
+	public CPP getCcp() {
+		return cpp;
+	}  
 
-  public CCP getCCP() {
-    return ccp;
-  }
+	public void setAantalModules(int aantalModules) {
+		this.aantalModules = aantalModules;
+	}
+
+	public int getAantalModules() {
+		return aantalModules;
+	}
+
 
 }

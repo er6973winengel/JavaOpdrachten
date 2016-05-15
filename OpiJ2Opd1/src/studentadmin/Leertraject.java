@@ -1,9 +1,9 @@
 package studentadmin;
 /**
- * Representeert een lijst met leertrajecten.
+ * Superklasse voor de verschillende soorten leertrajecten.
  * @author Erwin Engel
  */
-public abstract class Leertraject {
+public abstract class Leertraject implements Cloneable {
   private String naam = null;
   
   public Leertraject(String naam){
@@ -12,5 +12,9 @@ public abstract class Leertraject {
   
   public String getNaam(){
     return this.naam;
+  }
+  
+  public Object clone() throws CloneNotSupportedException{
+	  return super.clone();
   }
 }

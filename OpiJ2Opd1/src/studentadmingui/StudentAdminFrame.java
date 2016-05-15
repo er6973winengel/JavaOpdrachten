@@ -6,10 +6,10 @@ import javax.swing.JComboBox;
 import java.awt.Rectangle;
 import javax.swing.JTextField;
 
+import studentadmin.CPP;
 import studentadmin.Leerling;
+import studentadmin.Opleiding;
 import studentadmin.StudentenAdmin;
-import studentadmin.StudentenAdmin.CCPKeuze;
-import studentadmin.StudentenAdmin.OpleidingKeuze;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -56,36 +56,47 @@ public class StudentAdminFrame extends JFrame {
   StudentenAdmin administratie = new StudentenAdmin();
   /**
    * This is the default constructor
+ * @throws CloneNotSupportedException 
    */
-  public StudentAdminFrame() {
+  public StudentAdminFrame() throws CloneNotSupportedException {
     super();
     initialize();
     mijnInit();
   }
   // eigen methoden
-  private void mijnInit(){
-    for (OpleidingKeuze keuze : OpleidingKeuze.values()) {
-      opleidingComboBox.addItem(keuze);
+  /**
+   * Vullen comboboxen voor aangeboden Opleidingen en CPP's + afhandeling van de verschillende keuzes die in het scherm gemaakt
+   * kunnen worden
+   * @throws CloneNotSupportedException
+   */
+  private void mijnInit() throws CloneNotSupportedException{
+  	// ophalen lijst met Opleidingen en de namen van de Opleidingen in de combobox plaatsen
+  	ArrayList<Opleiding> opleidingLijst = administratie.geefOpleidingLijst();
+  	for (Opleiding opleiding : opleidingLijst){
+  		opleidingComboBox.addItem(opleiding.getNaam());
+  	}
+  	opleidingComboBox.setSelectedIndex(-1);
+  	
+    // ophalen lijst met CCPs en de namen van de Opleidingen in de combobox plaatsen
+    ArrayList<CPP> CcpLijst = administratie.geefCcpLijst();
+    for (CPP cpp : CcpLijst){
+      scholingComboBox.addItem(cpp.getNaam());
     }
-    opleidingComboBox.setSelectedIndex(-1);
-  
-    for (CCPKeuze keuze : CCPKeuze.values()) {
-      scholingComboBox.addItem(keuze);
-    }
-    scholingComboBox.setSelectedIndex(-1);
+    scholingComboBox.setSelectedIndex(-1); 
   }
-  
+  // nieuwe student registreren
   private void studentKnopAction(){
-    administratie.maakStudent(studentTextField.getText() , (OpleidingKeuze)opleidingComboBox.getSelectedItem());
+    administratie.maakStudent(studentTextField.getText() , (String)opleidingComboBox.getSelectedItem());
     studentTextField.setText("");
   }
-  
+  // nieuwe scholer registreren
   private void scholerKnopAction(){
-    administratie.maakScholer(scholerTextField.getText() , (CCPKeuze)scholingComboBox.getSelectedItem());
+    administratie.maakScholer(scholerTextField.getText() , (String)scholingComboBox.getSelectedItem());
     scholerTextField.setText("");
   }
-  
-  private void bestaandeNaamVeldAction(){
+  // 
+  private void bestaandeNaamVeldAction() throws CloneNotSupportedException{
+  // zoek leerling met ingevoerde naam: als leerling bestaat toon de leerling informatie, geef melding als leerling niet bestaat
     Leerling leerling = administratie.geefLeerling(bestaandeNaamVeld.getText());
     if (leerling != null){
       studentInfoVeld.setText(leerling.toString());
@@ -93,11 +104,12 @@ public class StudentAdminFrame extends JFrame {
       studentInfoVeld.setText("leerling bestaat niet: vul juiste naam in");
     }
   }
-  
-  private void puntenVeldAction(){
+  // aantal studiepunten van student verhogen
+  private void puntenVeldAction() throws CloneNotSupportedException{
     Leerling leerling = administratie.geefLeerling(bestaandeNaamVeld.getText());
     if (leerling != null){
       administratie.verhoogStudiepunten(leerling, Double.parseDouble(puntenVeld.getText()));
+      // leerlinginformatie opnieuw ophalen na verhoging
       leerling = administratie.geefLeerling(bestaandeNaamVeld.getText());
       studentInfoVeld.setText(leerling.toString());
       puntenVeld.setText("");
@@ -105,11 +117,12 @@ public class StudentAdminFrame extends JFrame {
       studentInfoVeld.setText("leerling bestaat niet: vul juiste naam in");
     }
   }
-  
-  private void moduleKnopAction(){
+  // aantal modules van scholer verhogen
+  private void moduleKnopAction() throws CloneNotSupportedException{
     Leerling leerling = administratie.geefLeerling(bestaandeNaamVeld.getText());
     if (leerling != null){
-      administratie.verhoogModules(leerling, 1.0);
+      administratie.verhoogModules(leerling, 1);
+      // leerlinginformatie opnieuw ophalen na verhoging
       leerling = administratie.geefLeerling(bestaandeNaamVeld.getText());
       studentInfoVeld.setText(leerling.toString());
       puntenVeld.setText("");
@@ -329,7 +342,12 @@ public class StudentAdminFrame extends JFrame {
       bestaandeNaamVeld.setFont(new Font("Tahoma", Font.PLAIN, 26));
       bestaandeNaamVeld.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          bestaandeNaamVeldAction();
+          try {
+			bestaandeNaamVeldAction();
+		} catch (CloneNotSupportedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         }
       });
       bestaandeNaamVeld.setBounds(new Rectangle(232, 42, 180, 35));
@@ -363,7 +381,12 @@ public class StudentAdminFrame extends JFrame {
       puntenVeld = new JTextField();
       puntenVeld.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          puntenVeldAction();
+          try {
+			puntenVeldAction();
+		} catch (CloneNotSupportedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         }
       });
       puntenVeld.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -382,7 +405,12 @@ public class StudentAdminFrame extends JFrame {
       moduleKnop = new JButton();
       moduleKnop.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-          moduleKnopAction();
+          try {
+			moduleKnopAction();
+		} catch (CloneNotSupportedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         }
       });
       moduleKnop.setFont(new Font("Tahoma", Font.PLAIN, 26));
@@ -489,7 +517,7 @@ public class StudentAdminFrame extends JFrame {
     return scholerButton;
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws CloneNotSupportedException {
     StudentAdminFrame fr = new StudentAdminFrame();
     fr.setVisible(true);
   }

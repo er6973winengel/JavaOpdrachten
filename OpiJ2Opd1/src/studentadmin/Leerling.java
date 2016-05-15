@@ -1,32 +1,36 @@
 package studentadmin;
 /**
- * Klasse die verantwoordelijk is voor de studenten administratie
+ * Superklasse voor de verschillende soorten leerlingen.
  * @author erwin
  */
-public abstract class Leerling {
+public abstract class Leerling implements Cloneable{
   private String naam = null;
   
   public Leerling(String naam){
     this.naam = naam;
   }
   
-  public abstract Leertraject getLeertraject();
-  
-  public abstract double geefScore();
  /**
   * Laat zien of leerling geslaagd is 
   * @return
   */
   public abstract boolean isGeslaagd();
- /**
-  * verhoogt de score van een leerling
-  * @param score
-  */
-  public abstract void verhoogScore(double score);
 
   public abstract String toString();
-  
-  public abstract Leerling clone();
+ /**
+  * maakt clone van leerling (diepe kopie, eigenlijk niet nodig omdat Opleiding en CPP
+  * niet wijzigbaar zijen) 
+  */
+  public Object clone() throws CloneNotSupportedException{
+	  Leerling l = (Leerling)super.clone();
+	  if (this instanceof Student) {
+	  	((Student) l).setOpleiding((Opleiding)((Student) l).getOpleiding().clone());
+	  }
+	  if (this instanceof Scholer) {
+	  	((Scholer) l).setCpp((CPP)((Scholer) l).getCcp().clone());
+	  }
+	  return l;
+  }
   
   public String getNaam(){
     return this.naam;
