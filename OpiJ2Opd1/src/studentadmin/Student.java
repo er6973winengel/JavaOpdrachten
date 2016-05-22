@@ -7,8 +7,9 @@ import java.util.Locale;
  * Representeert een Student.
  * @author Erwin Engel
  */
-public class Student extends Leerling {
+public class Student extends Leerling  {
 	private double aantalStudiepunten = 0.0;
+	private final double MAXSTUDIEPUNTEN = 250.0;
 	private Opleiding opleiding = null;
 
 	public Student (String naam, Opleiding opleiding){
@@ -35,10 +36,18 @@ public class Student extends Leerling {
 
 	/**
 	 * Verhoog huidige aantal studiepunten met gegeven verhoging
-	 * @param verhoging , aantal studieputen verhoging
+	 * @param verhoging
+	 * @throws StudentAdminException : indien maximale aantal modules overschreden
 	 */
-	public void verhoogStudiepunten(double verhoging) {
-		this.aantalStudiepunten = this.aantalStudiepunten + verhoging;    
+	public void verhoogStudiepunten(double verhoging) throws StudentAdminException {
+		if (this.aantalStudiepunten + verhoging <= MAXSTUDIEPUNTEN) {
+			this.aantalStudiepunten = this.aantalStudiepunten + verhoging;
+		} 
+		else {
+			throw new StudentAdminException("aantal studiepunten kan nog met maximaal "  
+																			+ (MAXSTUDIEPUNTEN- this.aantalStudiepunten) 
+																			+ " verhoogd worden");
+		}
 	}
 
 	public void setOpleiding(Opleiding opleiding) {

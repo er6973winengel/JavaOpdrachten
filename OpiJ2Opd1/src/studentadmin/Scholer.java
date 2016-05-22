@@ -5,6 +5,7 @@ package studentadmin;
  */
 public class Scholer extends Leerling{
 	private int aantalModules = 0;
+	private final int MAXMODULES = 8;
 	private CPP cpp = null;
 
 	public Scholer(String naam, CPP cpp){
@@ -30,10 +31,18 @@ public class Scholer extends Leerling{
 
 	/**
 	 * Verhoog huidige aantal modules met gegeven verhoging
-	 * @param verhoging , aantal modules verhoging
+	 * @param verhoging
+	 * @throws StudentAdminException : indien maximum aantal modules overschreden
 	 */
-	public void verhoogModules(int verhoging) {
-		this.aantalModules = this.aantalModules + verhoging;    
+	public void verhoogModules(int verhoging) throws StudentAdminException {
+		if (this.aantalModules + verhoging <= MAXMODULES){
+			this.aantalModules = this.aantalModules + verhoging;
+		}
+		else {
+			throw new StudentAdminException("aantal studiepunten kan nog met maximaal "  
+																			+ (MAXMODULES - this.aantalModules) 
+																			+ " verhoogd worden");			
+		}
 	}
 
 	public void setCpp(CPP cpp) {
