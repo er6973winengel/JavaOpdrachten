@@ -65,4 +65,10 @@ public class Student extends Leerling  {
 	public void setAantalStudiepunten(double aantalStudiepunten) {
 		this.aantalStudiepunten = aantalStudiepunten;
 	}
+	
+	public Object clone() throws CloneNotSupportedException{
+		Student s = (Student)super.clone();
+		s.opleiding = (Opleiding) this.opleiding.clone();
+		return s;
+	}
 }

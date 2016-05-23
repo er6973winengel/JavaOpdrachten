@@ -61,5 +61,10 @@ public class Scholer extends Leerling{
 		return aantalModules;
 	}
 
+	public Object clone() throws CloneNotSupportedException{
+		Scholer s = (Scholer)super.clone();
+		s.cpp = (CPP) this.cpp.clone();
+		return s;
+	}
 
 }

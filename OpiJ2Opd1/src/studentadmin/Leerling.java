@@ -18,19 +18,12 @@ public abstract class Leerling implements Cloneable{
 
   public abstract String toString();
  /**
-  * maakt clone van leerling (diepe kopie, eigenlijk niet nodig omdat Opleiding en CPP
-  * niet wijzigbaar zijen) 
+  * maakt clone van leerling 
   */
   public Object clone() throws CloneNotSupportedException{
 	  Leerling l = (Leerling)super.clone();
-	  if (this instanceof Student) {
-	  	((Student) l).setOpleiding((Opleiding)((Student) l).getOpleiding().clone());
-	  }
-	  if (this instanceof Scholer) {
-	  	((Scholer) l).setCpp((CPP)((Scholer) l).getCcp().clone());
-	  }
 	  return l;
-  }
+  } 
   
   public String getNaam(){
     return this.naam;
