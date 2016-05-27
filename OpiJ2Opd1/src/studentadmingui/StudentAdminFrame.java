@@ -92,7 +92,7 @@ public class StudentAdminFrame extends JFrame {
 		}
 	}
 /**
- * 	ieuwe student registreren
+ * 	nieuwe student registreren
  */
 	private void studentKnopAction(){
 		geefMelding(voegStudenttoePanel, "");
