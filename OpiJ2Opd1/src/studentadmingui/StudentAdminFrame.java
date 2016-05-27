@@ -91,7 +91,9 @@ public class StudentAdminFrame extends JFrame {
 			geefMelding(voegScholertoePanel, stdntAdminEx.getMessage());
 		}
 	}
-	// nieuwe student registreren
+/**
+ * 	ieuwe student registreren
+ */
 	private void studentKnopAction(){
 		geefMelding(voegStudenttoePanel, "");
 		try {
@@ -104,7 +106,9 @@ public class StudentAdminFrame extends JFrame {
 			geefMelding(stdntAdminEx.getMessage());
 		}
 	}
-	// nieuwe scholer registreren
+	/**
+	 * nieuwe scholer registreren
+	 */
 	private void scholerKnopAction(){
 		geefMelding(voegScholertoePanel, "");
 		try {
@@ -118,9 +122,10 @@ public class StudentAdminFrame extends JFrame {
 			geefMelding(stdntAdminEx.getMessage());
 		}
 	}
-	// 
+	/**
+	 *  zoek leerling met ingevoerde naam: als leerling bestaat toon de leerling informatie, geef melding als leerling niet bestaat
+	 */
 	private void bestaandeNaamVeldAction() {
-		// zoek leerling met ingevoerde naam: als leerling bestaat toon de leerling informatie, geef melding als leerling niet bestaat
 		geefMelding(studentPanel, "");
 		studentInfoVeld.setText("");
 		try{
@@ -132,7 +137,9 @@ public class StudentAdminFrame extends JFrame {
 			studentInfoVeld.setText("");
 		}
 	}
-	// aantal studiepunten van student verhogen
+	/**
+	 * aantal studiepunten van student verhogen
+	 */
 	private void puntenVeldAction() {
 		geefMelding(studentPanel, "");
 		Leerling leerling = null;
@@ -156,7 +163,9 @@ public class StudentAdminFrame extends JFrame {
 		}
 		puntenVeld.setText("");
 	}
-	// aantal modules van scholer verhogen
+	/**
+	 * aantal modules van scholer verhogen
+	 */
 	private void moduleKnopAction() {
 		geefMelding(studentPanel, "");
 		try {
@@ -172,7 +181,9 @@ public class StudentAdminFrame extends JFrame {
 		}
 		puntenVeld.setText("");
 	}
-
+	/**
+	 * alle leerlingen tonen, indien geen aanwezig: geef melding
+	 */
 	private void ToonAlleKnopAction(){
 		uitvoerGebied.setText("");
 		ArrayList<String> leerlingenInfoLijst = administratie.geefLeerlingenInfo();
@@ -184,12 +195,19 @@ public class StudentAdminFrame extends JFrame {
 			}    	
 		}
 	}
-
+	/**
+	 * hulpmethode voor afdrukken fouttekst op juiste panel
+	 * @param jpanel
+	 * @param tekst
+	 */
 	private void geefMelding(JPanel jpanel, String tekst){
 		jpanel.add(infoLabel);
 		infoLabel.setText(tekst);
 	}
-
+	/**
+	 * hulpmethode voor afdrukken fouttekst (als al op juiste panel geplaatst)
+	 * @param tekst
+	 */
 	private void geefMelding(String tekst){
 		infoLabel.setText(tekst);
 	}
