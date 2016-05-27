@@ -108,6 +108,11 @@ public class StudentenAdmin {
 		if (!(leerling  instanceof Student)){
 			throw new StudentAdminException("studiepunten verhogen kan alleen bij een student");
 		}
+		// controleer of studiepunten >= 0
+		if (verhoging <= 0) {
+			throw new StudentAdminException("verhoge kan alleen met getal dat groter als nul is");
+		}
+		
 		// verhogen studiepunten als leerling bestaat
 		((Student) zoekLeerlingObject(leerling.getNaam())).verhoogStudiepunten(verhoging);
 	}
