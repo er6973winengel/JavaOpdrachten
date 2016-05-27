@@ -92,11 +92,7 @@ public class StudentAdminFrame extends JFrame {
 		}
 	}
 /**
-<<<<<<< HEAD
  * 	nieuwe student registreren
-=======
- * 	ieuwe student registreren
->>>>>>> 25f3e0b... comments added
  */
 	private void studentKnopAction(){
 		geefMelding(voegStudenttoePanel, "");
