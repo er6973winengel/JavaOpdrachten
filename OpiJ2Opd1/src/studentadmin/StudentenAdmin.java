@@ -23,35 +23,38 @@ public class StudentenAdmin {
 	}
 
 	/**
-	 * Methode om studenten toe te voegen. Bij toevoegen van student die al bestaat wordt bestaande student 
-	 * overschreven.  
+	 * Methode om studenten toe te voegen. Alleen nog niet bestaande naam van leerling kan toegevoegd worden.
 	 * @param naam , naam van student
 	 * @param opleidingKeuze , naam van gekozen opleiding
-	 * @throws StudentAdminException
+	 * @throws StudentAdminException wanneer student niet kan worden toegevoegd
 	 */
 	public void maakStudent(String naam, String opleidingKeuze)throws StudentAdminException{
 		// controleer gevraagde opleiding object, indien opleiding niet aanwezig: exception 
 		if (zoekOpleidingObject(opleidingKeuze) == null){
 			throw new StudentAdminException("kies een bestaande opleiding");
 		}
+		// verwijder leading and trailing spaces uit naam
+		String naamGeenSpatie = naam.trim();
+		
 		// controleer op lengte naam minimaal 2 karakters, indien te kort: exception
-		if (naam.length() < 2 ){
+		if (naamGeenSpatie.length() < 2 ){
 			throw new StudentAdminException("naam moet minimaal 2 posities lang zijn");
 		}
+		// controleer op eerste posities geen space
+		
 		// controleer naam leerling, indien naam al aanwezig: exception
-		if (zoekLeerlingObject(naam) != null ){
+		if (zoekLeerlingObject(naamGeenSpatie) != null ){
 			throw new StudentAdminException("kies een nog niet bestaande leerling");
 		}
 		// indien controles goed: nieuwe student toevoegen
-		leerlingLijst.add(new Student(naam, zoekOpleidingObject(opleidingKeuze)));
+		leerlingLijst.add(new Student(naamGeenSpatie, zoekOpleidingObject(opleidingKeuze)));
 	}
 
 	/**
-	 * Methode om scholers toe te voegen. Bij toevoegen van scholer die al bestaat wordt bestaande student 
-	 * overschreven.  
+	 * Methode om scholers toe te voegen. Alleen nog niet bestaande naam van leerling kan toegevoegd worden.
 	 * @param naam , naam van scholer
-	 * @param  , naam van gekozen CPP
-	 * @throws StudentAdminException
+	 * @param  cppKeuze, naam van gekozen CPP
+	 * @throws StudentAdminException wanneer scholer niet kan worden toegevoegd
 	 */
 	public void maakScholer(String naam, String cppKeuze)throws StudentAdminException{
 		// controleer gevraagde opleiding object, indien opleiding niet aanwezig: exception 
@@ -75,7 +78,7 @@ public class StudentenAdmin {
 	 * teruggegeven. Indien geen leerling wordt gevonden dan exceptie: leerling niet gevonden
 	 * @param naam , naam van gezochte leerling
 	 * @return Leerling (kopie van leerling uit administratie)
-	 * @throws StudentAdminException
+	 * @throws StudentAdminException wanneer leerling niet bestaat
 	 */
 	public Leerling geefLeerling(String naam) throws StudentAdminException {
 		Leerling leerling = zoekLeerlingObject(naam);
@@ -97,7 +100,7 @@ public class StudentenAdmin {
 	 * Methode die de behaalde studiepunten van een gegeven student verhoogt met gegeven verhoging
 	 * @param leerling , Leerling object (kopie uit administratie)
 	 * @param verhoging , getal waarmee aantal studiepunten verhoogt moet worden
-	 * @throws StudentAdminException
+	 * @throws StudentAdminException wanneer verhoging niet kan plaatsvinden
 	 */
 	public void verhoogStudiepunten(Leerling leerling, double verhoging) throws StudentAdminException {
 		// controleer op bestaan leerling, indien niet bestaand: exceptions 
@@ -120,7 +123,7 @@ public class StudentenAdmin {
 	 * Methode die het aantal behaalde modules van een gegeven scholer verhoogt met gegeven verhoging
 	 * @param leerling, Leerling object (kopie uit administratie)
 	 * @param verhoging , getal waarme aantal modules verhoogt moet worden
-	 * @throws StudentAdminException
+	 * @throws StudentAdminException wanneer modules niet verhoogd kan worden
 	 */
 	public void verhoogModules(Leerling leerling, int verhoging) throws StudentAdminException {
 		// controleer op bestaan leerling, indien niet bestaand: exceptions 
